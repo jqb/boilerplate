@@ -22,28 +22,27 @@ Directory Structure::
 
     django-layout/
         apps/
-            core/       # there always should be "core" app
-                templates/
-                     core/
-                        core.html
+	    base/             # base template's, js & css libs as an standard django-app? Why not! :)
+	        templates/    # base.html, other "base" templates, some template overrides
+		    base.html
+		    404.html
+	    	    500.html
+		static/
+		    lib/      # only project-wide js & css libs
+ 		    images/
+
+            core/             # there always should be "core" app; base classes api's etc.
                 models.py
                 views.py
                 forms.py
+		static/       # very basic project things, common for other apps
+		    core/
+		        js/
+			    core.js
+			css/
+			    core.css
         lib/
-        static/
-	    apps/
-	        foo/
-		    css/
-		    js/
-		    tests/
-		bar/
-		    css/
-		    js/
-		    tests/
-            css/         # project global css
-            js/          # project global js
-            lib/         # external libs are always derived together with css, so we keep them as a whole
-            images/
+        static/               # auto-generated, nothings really here
         requirements/
             common.txt
             dev.txt
@@ -52,14 +51,10 @@ Directory Structure::
 	    urls.py
 	    dev.py
 	    production.py
-        templates/
-	    base.html
-	    index.html
-	    404.html
-	    500.html
         environment.py    # useful for loading the env just for just-simple-and-fast-check script
         manage.py
-        settings.py       # just loads `conf` propearly
+        settings.py       # just loads `conf` properly
+
 
 apps
 ----

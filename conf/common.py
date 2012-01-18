@@ -43,11 +43,11 @@ TEMPLATE_LOADERS = (
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    # 'django.contrib.sessions.middleware.SessionMiddleware',
-    # 'django.contrib.auth.middleware.AuthenticationMiddleware',
-    # 'django.contrib.messages.middleware.MessageMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
 
-    # this debug_toolbar middleware need to be in the end
+    # debuging middleware
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'staticserve.middleware.StaticServe',
 )
@@ -73,7 +73,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 SITE_ID = 1
 
 # django.contrib.admin
-ADMIN_MEDIA_PREFIX = '/media/'
+ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 # django debug toolbar
 INTERNAL_IPS = ('127.0.0.1',)
