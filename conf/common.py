@@ -21,13 +21,13 @@ USE_I18N = True
 USE_L10N = True
 
 INSTALLED_APPS = (
-    # 'django.contrib.auth',
-    # 'django.contrib.contenttypes',
-    # 'django.contrib.sites',
-    # 'django.contrib.admin',
-    # 'django.contrib.sessions',
-    # 'django.contrib.messages',
-    # 'django.contrib.staticfiles',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sites',
+    'django.contrib.admin',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
 
     'debug_toolbar',
 )
@@ -49,6 +49,7 @@ MIDDLEWARE_CLASSES = (
 
     # this debug_toolbar middleware need to be in the end
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'staticserve.middleware.StaticServe',
 )
 
 

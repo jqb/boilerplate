@@ -1,2 +1,3 @@
 django
 South
+-e git+git@github.com:jqb/django-staticserve.git#egg=staticserve
