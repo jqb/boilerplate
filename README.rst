@@ -18,8 +18,10 @@ Related Projects
 Acknowledgements
 ================
 
-Directory structure::
+directory structure
+----
 
+<pre>
     django-boilerplate
     ├── apps
     │   ├── core
@@ -96,6 +98,7 @@ Directory structure::
         environment.py    # useful for loading the env just for just-simple-and-fast-check script
         manage.py
         settings.py       # just loads `conf` properly
+</pre>
 
 apps
 ----
