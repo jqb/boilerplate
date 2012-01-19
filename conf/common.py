@@ -31,7 +31,6 @@ INSTALLED_APPS = (
 
     'debug_toolbar',
 
-    'apps.base',
     'apps.core',
 )
 
