@@ -18,8 +18,7 @@ Related Projects
 Acknowledgements
 ================
 
-directory structure
-----
+Directory structure::
 
     django-boilerplate
     ├── apps
