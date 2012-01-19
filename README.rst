@@ -18,8 +18,49 @@ Related Projects
 Acknowledgements
 ================
 
-Directory Structure::
+directory structure::
 
+    django-boilerplate
+    ├── apps
+    │   ├── core
+    │   │   ├── __init__.py
+    │   │   ├── models.py
+    │   │   ├── README.rst
+    │   │   ├── static
+    │   │   │   ├── css
+    │   │   │   │   ├── core.css
+    │   │   │   │   └── README.rst
+    │   │   │   ├── img
+    │   │   │   │   └── README.rst
+    │   │   │   └── js
+    │   │   │       ├── core.js
+    │   │   │       └── README.rst
+    │   │   ├── templates
+    │   │   │   ├── base.html
+    │   │   │   └── README.rst
+    │   │   └── views.py
+    │   ├── __init__.py
+    │   └── README.rst
+    ├── conf
+    │   ├── common.py
+    │   ├── dev.py
+    │   ├── __init__.py
+    │   └── urls.py
+    ├── __init__.py
+    ├── lib
+    │   ├── __init__.py
+    │   └── README.rst
+    ├── manage.py
+    ├── README.rst
+    ├── requirements
+    │   ├── common.txt
+    │   ├── dev.txt
+    │   ├── production.txt
+    │   └── README.rst
+    ├── settings.py
+    └── static
+        └── README.rst
+  
     django-layout/
         apps/
 	    base/             # base template's, js & css libs as an standard django-app? Why not! :)
@@ -54,7 +95,6 @@ Directory Structure::
         environment.py    # useful for loading the env just for just-simple-and-fast-check script
         manage.py
         settings.py       # just loads `conf` properly
-
 
 apps
 ----
