@@ -18,10 +18,8 @@ Related Projects
 Acknowledgements
 ================
 
-directory structure
-----
+directory structure::
 
-<pre>
     django-boilerplate
     ├── apps
     │   ├── core
@@ -62,8 +60,7 @@ directory structure
     ├── settings.py
     └── static
         └── README.rst
-
-   
+  
     django-layout/
         apps/
 	    base/             # base template's, js & css libs as an standard django-app? Why not! :)
@@ -98,7 +95,6 @@ directory structure
         environment.py    # useful for loading the env just for just-simple-and-fast-check script
         manage.py
         settings.py       # just loads `conf` properly
-</pre>
 
 apps
 ----
