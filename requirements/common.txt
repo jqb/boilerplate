@@ -1,3 +1,4 @@
 django
 South
 -e git+git@github.com:jqb/django-staticserve.git#egg=staticserve
+-e git+git@github.com:jqb/extrabuiltins.git#egg=extrabuiltins

@@ -1,14 +1,7 @@
-from os.path import join, dirname, abspath
-# keep in mind we're in <project>/conf !
-
-
-projectpath = lambda *a : join(join(dirname(abspath(__file__)), '..'), *a)
-
-
 PROJECT_ROOT = projectpath()
 SECRET_KEY = '+x&(yo6og$2yn)byx274l(ej31ae5%kt@oi**du6f$0r7wqq9y'
 
-ROOT_URLCONF = 'conf.urls'
+ROOT_URLCONF = 'settings.urls'
 TIME_ZONE = 'Europe/Warsaw'
 LANGUAGE_CODE = 'en'
 
