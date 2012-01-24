@@ -1,29 +1,19 @@
 import os
-from extrabuiltins import extrabuiltins
 
 def projectpath(*a):
-    from os.path import join, dirname, abspath
-    return join(join(dirname(abspath(__file__)), '..'), *a)
+    from os.path import join, abspath
+    return join('/'.join(abspath(__file__).split('/')[0:-2]), *a)
 
-with extrabuiltins({'projectpath': projectpath}):
-    configuration_files = [
-        'settings.default',
-        os.environ.get('DJANGO_ENV', 'settings.dev'),
-        'settings.local_settings',
-    ]
-    loaded_modules = []
-    for env in configuration_files:
-        try:
-            config_module = __import__(env, globals(), locals(), env)
+files_base_names = [
+    'default',
+    os.environ.get('DJANGO_ENV', 'dev'),
+    'local_settings'
+]
 
-            for setting in dir(config_module):
-                if setting == setting.upper():
-                    locals()[setting] = getattr(config_module, setting)
-        except ImportError:
-             pass
-        else:
-            loaded_modules.append(env)
-    locals()['LOADED_MODULES'] = loaded_modules
+for base_name in files_base_names:
+    filepath = '%s/%s.py' % (projectpath('settings'), base_name)
+    if os.path.exists(filepath):
+        execfile(filepath)
 
-    # cleaninig up
-    del config_module, setting, env, loaded_modules, projectpath, extrabuiltins, os
+# cleanup
+del base_name, files_base_names
