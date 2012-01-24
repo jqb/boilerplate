@@ -1,8 +1,8 @@
 import os
 
 def projectpath(*a):
-    from os.path import join, abspath
-    return join('/'.join(abspath(__file__).split('/')[0:-2]), *a)
+    from os.path import join, dirname, abspath
+    return join(join(dirname(abspath(__file__)), '..'), *a)
 
 files_base_names = [
     'default',
