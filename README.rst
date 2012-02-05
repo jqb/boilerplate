@@ -1,5 +1,5 @@
-django-boilerplate -- a standard layout for Django apps
-*******************************************************
+django-boilerplate - yet another django project layout
+******************************************************
 
 Description
 ***********
@@ -12,7 +12,7 @@ convention can go a long way.
 Related Projects
 ================
 
-#. `bueda-django-boilerplate <https://github.com/bueda/ops>`_
+#. `bueda-django-boilerplate <https://github.com/bueda/django-boilerplate>`_
 
 
 Acknowledgements
@@ -68,12 +68,12 @@ apps
 
 All of your Django "apps" go in this directory. These have models, views, forms,
 templates or all of the above. These should be Python packages you would add to
-your project's `INSTALLED_APPS` list.
+your project's ``INSTALLED_APPS`` list.
 
-Everything in this directory is added to the `PYTHONPATH` when
-the `setup` function from `environment.py` is invoked.
+Everything in this directory is added to the ``PYTHONPATH`` when
+the ``setup`` function from ``environment.py`` is invoked.
 
-There's one predefined app: `core`. Every base classes should be placed here.
+There's one predefined app: ``core``. Every base classes should be placed here.
 It's also a place to keep your project-level static files. Here's how you might
 to organize it::
 
@@ -82,16 +82,16 @@ to organize it::
 
 Why is that?
 
-When `collectstatic` commands creates the content of `static` folder it just
+When ``collectstatic`` commands creates the content of ``static`` folder it just
 copy contents of static folders from each app. We decide that the best way
-to keep clean, resonable and simple structure, we'll put all static dependentcies
-to `core` app.
+to keep clean, resonable and simple structure, will be keeping all static
+dependentcies to ``core`` app.
 
 lib
 ---
 
 Third party Python packages and/or django-apps. Everything in this directory
-is added to the `PYTHONPATH` when the `setup` function from  `environment.py`
+is added to the ``PYTHONPATH`` when the ``setup`` function from  ``environment.py``
 is invoked.
 
 
@@ -99,27 +99,21 @@ static
 ------
 
 This folder is fully auto-generated. You don't even need to create it.
-It will be created by `manage.py collectstatic` command line tool.
+It will be created by ``manage.py collectstatic`` command line tool.
 
 
 requirements
 ------------
 
 pip requirements files, optionally one for each app environment. The
-`common.txt` is installed in every case.
-
-Our Fabfile (see below) installs the project's dependencies from these files.
-It's an attempt to standardize the location for dependencies like Rails'
-`Gemfile`. We also specifically avoid listing the dependencies in the README of
-the project, since a list there isn't checked programmatically or ever actually
-installed, so it tends to quickly become out of date.
+``common.txt`` is installed in every case.
 
 
 settings
 --------
 
 Very similar to requirements - settings for each environment. There's also
-main `urls.py` file.
+main ``urls.py`` file.
 
 
 Files
@@ -127,13 +121,13 @@ Files
 
 - environment.py
 
-Introduces `setup` function that modifies the `PYTHONPATH` to allow importing
-from the `apps/` and `lib/` directories.
+Introduces ``setup`` function that modifies the ``PYTHONPATH`` to allow importing
+from the ``apps`` and ``lib`` directories.
 
 
 - manage.py
 
-The standard Django `manage.py`.
+The standard Django ``manage.py``.
 
 
 Authors
