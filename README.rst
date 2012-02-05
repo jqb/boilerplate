@@ -27,24 +27,26 @@ directory structure::
     │   │   ├── models.py
     │   │   ├── README.rst
     │   │   ├── static
-    │   │   │   ├── css
-    │   │   │   │   ├── core.css
-    │   │   │   │   └── README.rst
-    │   │   │   ├── img
-    │   │   │   │   └── README.rst
-    │   │   │   └── js
-    │   │   │       ├── core.js
-    │   │   │       └── README.rst
+    │   │   │   ├── core
+    │   │   │   │   ├── css
+    │   │   │   │   │   ├── core.css
+    │   │   │   │   │   └── README.rst
+    │   │   │   │   ├── img
+    │   │   │   │   │   └── README.rst
+    │   │   │   │   ├── js
+    │   │   │   │   │   ├── core.js
+    │   │   │   │   │   └── README.rst
+    │   │   │   │   └── lib
     │   │   ├── templates
     │   │   │   ├── base.html
     │   │   │   └── README.rst
     │   │   └── views.py
     │   ├── __init__.py
     │   └── README.rst
-    ├── conf
-    │   ├── common.py
-    │   ├── dev.py
+    ├── settings
     │   ├── __init__.py
+    │   ├── default.py
+    │   ├── dev.py
     │   └── urls.py
     ├── __init__.py
     ├── lib
@@ -57,7 +59,6 @@ directory structure::
     │   ├── dev.txt
     │   ├── production.txt
     │   └── README.rst
-    ├── settings.py
     └── static
         └── README.rst
 
@@ -69,23 +70,36 @@ All of your Django "apps" go in this directory. These have models, views, forms,
 templates or all of the above. These should be Python packages you would add to
 your project's `INSTALLED_APPS` list.
 
-Everything in this directory is added to the `PYTHONPATH` when the
-`environment.py` file is imported.
+Everything in this directory is added to the `PYTHONPATH` when
+the `setup` function from `environment.py` is invoked.
 
+There's one predefined app: `core`. Every base classes should be placed here.
+It's also a place to keep your project-level static files. Here's how you might
+to organize it::
+
+  apps/core/static/core/      <== application's css, js, img
+  apps/core/static/core/lib/  <== css, js libraries
+
+Why is that?
+
+When `collectstatic` commands creates the content of `static` folder it just
+copy contents of static folders from each app. We decide that the best way
+to keep clean, resonable and simple structure, we'll put all static dependentcies
+to `core` app.
 
 lib
 ---
 
 Third party Python packages and/or django-apps. Everything in this directory
-is added to the `PYTHONPATH` when the `environment.py` file is imported.
+is added to the `PYTHONPATH` when the `setup` function from  `environment.py`
+is invoked.
 
 
 static
 ------
 
-A subfolder each for CSS, Javascript and images. Third-party files (e.g. the
-960.gs CSS or jQuery) go in a `lib/` subfolder to keep your own code
-separate.
+This folder is fully auto-generated. You don't even need to create it.
+It will be created by `manage.py collectstatic` command line tool.
 
 
 requirements
@@ -105,7 +119,7 @@ settings
 --------
 
 Very similar to requirements - settings for each environment. There's also
-main urls.py file.
+main `urls.py` file.
 
 
 Files
@@ -113,18 +127,13 @@ Files
 
 - environment.py
 
-Modifies the `PYTHONPATH` to allow importing from the `apps/` and `lib/`
-directories. This module is imported at the top of `settings.py` to
-make sure it runs for both local development (using Django's built-in server)
-and in production (run through mod-wsgi, gunicorn, etc.).
+Introduces `setup` function that modifies the `PYTHONPATH` to allow importing
+from the `apps/` and `lib/` directories.
+
 
 - manage.py
 
 The standard Django `manage.py`.
-
-- settings.py
-
-settings loading.
 
 
 Authors
