@@ -32,7 +32,7 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
     'django.template.loaders.eggs.Loader',
-    )
+)
 
 
 MIDDLEWARE_CLASSES = (
@@ -45,12 +45,11 @@ MIDDLEWARE_CLASSES = (
     # debuging middleware
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'staticserve.middleware.StaticServe',
+    'staticserve.middleware.MediaServe',
 )
 
 
-TEMPLATE_DIRS = (
-    projectpath('templates'),
-)
+TEMPLATE_DIRS = ()
 
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -90,4 +89,8 @@ DEBUG_TOOLBAR_CONFIG = {
 # django.contrib.staticfiles
 STATIC_ROOT = projectpath('static')
 STATIC_URL = '/static/'
+
+# media files
+MEDIA_ROOT = projectpath('media')
+MEDIA_URL = '/media/'
 # APPS SETTINGS #########################################
