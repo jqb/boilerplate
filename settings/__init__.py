@@ -16,4 +16,4 @@ for base_name in files_base_names:
         execfile(filepath)
 
 # cleanup
-del base_name, files_base_names
+del base_name, files_base_names, filepath
