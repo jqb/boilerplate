@@ -24,9 +24,7 @@ directory structure::
     ├── apps
     │   ├── core
     │   │   ├── __init__.py
-    │   │   ├── __init__.pyc
     │   │   ├── models.py
-    │   │   ├── models.pyc
     │   │   ├── README.rst
     │   │   ├── static
     │   │   │   └── core
@@ -50,9 +48,7 @@ directory structure::
     │   ├── __init__.py
     │   └── README.rst
     ├── environment.py
-    ├── environment.pyc
     ├── __init__.py
-    ├── __init__.pyc
     ├── lib
     │   ├── __init__.py
     │   └── README.rst
@@ -69,15 +65,14 @@ directory structure::
     │   └── README.rst
     ├── settings
     │   ├── default.py
-    │   ├── default.pyc
     │   ├── dev.py
     │   ├── __init__.py
-    │   ├── __init__.pyc
     │   ├── README.rst
     │   └── urls.py
     ├── static
     │   └── README.rst
     └── TIMELINE.rst
+
 
 apps
 ----
