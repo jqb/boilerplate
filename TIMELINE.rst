@@ -1,6 +1,7 @@
 django-boilerplate - timeline
 *****************************
 
+Don't expect dates here... But feel free to ISSUE ( https://github.com/jqb/django-boilerplate/issues ) new things You would like to see or change in django-boilerplate!
 
 django-boilerplate beta
 =======================
