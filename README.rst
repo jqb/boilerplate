@@ -19,7 +19,7 @@ Acknowledgements
 ================
 
 directory structure::
-
+    
     django-boilerplate
     ├── apps
     │   ├── core
@@ -27,40 +27,51 @@ directory structure::
     │   │   ├── models.py
     │   │   ├── README.rst
     │   │   ├── static
-    │   │   │   ├── core
-    │   │   │   │   ├── css
-    │   │   │   │   │   ├── core.css
-    │   │   │   │   │   └── README.rst
-    │   │   │   │   ├── img
-    │   │   │   │   │   └── README.rst
-    │   │   │   │   ├── js
-    │   │   │   │   │   ├── core.js
-    │   │   │   │   │   └── README.rst
-    │   │   │   │   └── lib
+    │   │   │   └── core
+    │   │   │       ├── css
+    │   │   │       │   ├── core.css
+    │   │   │       │   └── README.rst
+    │   │   │       ├── img
+    │   │   │       │   └── README.rst
+    │   │   │       ├── js
+    │   │   │       │   ├── core.js
+    │   │   │       │   └── README.rst
+    │   │   │       ├── lib
+    │   │   │       │   └── README.rst
+    │   │   │       └── README.rst
     │   │   ├── templates
+    │   │   │   ├── 404.html
+    │   │   │   ├── 500.html
     │   │   │   ├── base.html
     │   │   │   └── README.rst
     │   │   └── views.py
     │   ├── __init__.py
     │   └── README.rst
-    ├── settings
-    │   ├── __init__.py
-    │   ├── default.py
-    │   ├── dev.py
-    │   └── urls.py
+    ├── environment.py
     ├── __init__.py
     ├── lib
     │   ├── __init__.py
     │   └── README.rst
+    ├── log
+    │   └── README.rst
     ├── manage.py
+    ├── media
+    │   └── README.rst
     ├── README.rst
     ├── requirements
     │   ├── common.txt
     │   ├── dev.txt
     │   ├── production.txt
     │   └── README.rst
-    └── static
-        └── README.rst
+    ├── settings
+    │   ├── default.py
+    │   ├── dev.py
+    │   ├── __init__.py
+    │   ├── README.rst
+    │   └── urls.py
+    ├── static
+    │   └── README.rst
+    └── TIMELINE.rst
 
 
 apps
@@ -94,6 +105,10 @@ Third party Python packages and/or django-apps. Everything in this directory
 is added to the ``PYTHONPATH`` when the ``setup`` function from  ``environment.py``
 is invoked.
 
+log
+---
+
+Default place to store logs from your loggers. We recommend ./logs/$app/ for keeping logs of $app django application.
 
 static
 ------
