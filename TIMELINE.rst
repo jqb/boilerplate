@@ -1,14 +1,14 @@
 django-boilerplate - timeline
-***
+*****************************
 
 django-boilerplate beta
-===
+=======================
 
 django-boilerplate alpha
-===
+========================
 
 django-boilerplate future
-===
+=========================
 
 #. django-boilerplate update problem?
 #. django 'best coding' practicies (separate project?), coding rules
