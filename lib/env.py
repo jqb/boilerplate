@@ -20,37 +20,18 @@ def setup(root=None, settings_module_name=None):
          "project.setting"
 
     Usage:
-    >>> import environment
-    >>> environment.setup()
+    >>> import env
+    >>> env.setup()
     >>> # from now on paths are setup, and django is configured
     >>> # you can use it in separate "sandbox" script just to check
     >>> # things really quick
     """
+
     root = root or os.path.dirname(os.path.abspath(__file__))
     settings_module_name = settings_module_name or 'settings'
-
-    path = lambda *a: os.path.join(root, *a)
 
     # 1) try to import module
     settings = import_module(settings_module_name)
 
-    # 2) setup pythonpath
-    prev_sys_path = list(sys.path)
-    site.addsitedir(path('apps'))
-    if os.path.exists(path('lib')):
-        for directory in os.listdir(path('lib')):
-            full_path = path('lib/%s' % directory)
-            if os.path.isdir(full_path):
-                site.addsitedir(full_path)
-
-    # Move the new items to the front of sys.path. (via virtualenv)
-    new_sys_path = []
-    for item in list(sys.path):
-        if item not in prev_sys_path:
-            new_sys_path.append(item)
-            sys.path.remove(item)
-
-    sys.path[:0] = new_sys_path
-
-    # 3) cofigure django
+    # 2) cofigure django
     setup_environ(settings)
