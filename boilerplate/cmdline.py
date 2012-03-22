@@ -127,26 +127,6 @@ def find_command(name):
 def handle(argv):
     parser = top_level_option_parser()
 
-    if os.environ.get('BOILERPLATE_AUTO_COMPLETE') == '1':
-        # TODO: ... of course ... it's awful right now, but we definitely
-        #       need (bash) completion for command line.
-        alist = os.environ.get('COMP_WORDS').split(" ")
-        if len(alist) == 2:
-            cmdstart = alist[-1]
-            for cmd_class in register:
-                name = cmdname(cmd_class)
-                if name.startswith(cmdstart):
-                    output(name)
-            exit(1)
-
-        if len(alist) == 3 and alist[-2] == "create":
-
-            for d in os.listdir(conf.templates):
-                if d.startswith(alist[-1]) and not (d.endswith("py") or d.endswith("pyc")):
-                    output(d)
-            exit(1)
-
-
     if len(argv) < 1:
         parser.print_help()
         exit(1)
