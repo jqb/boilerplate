@@ -4,6 +4,7 @@ import errno
 import shutil
 import os.path as ospath
 
+
 def mkdir_p(*path):
     try:
         os.makedirs(ospath.join(*path))
