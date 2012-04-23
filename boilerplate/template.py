@@ -26,22 +26,18 @@ import os.path as ospath
 from . import shell
 
 
-filecontent_var_re = re.compile('(%s.*?%s)' % (
-    re.escape('{{'), re.escape('}}')
+VAR_START = '_$'
+VAR_END = '$_'
+VAR_RE = re.compile('(%s.*?%s)' % (
+    re.escape(VAR_START), re.escape(VAR_END)
 ))
 
 
-filesystem_var_re = re.compile('(%s.*?%s)' % (
-    re.escape('_$'), re.escape('$_')
-))
-
-
-def resolve(text, context, var_re=filecontent_var_re):
+def resolve(text, context, var_re=VAR_RE):
     if not var_re.match(text):
         return text
 
-    var_name = text.strip().strip('{{').strip('}}').strip()
-    var_name = text.strip().strip('_$').strip('$_').strip()
+    var_name = text.strip().strip(VAR_START).strip(VAR_END).strip()
     val = context[var_name]
     try:
         return val()
@@ -49,7 +45,7 @@ def resolve(text, context, var_re=filecontent_var_re):
         return val
 
 
-def process_line(line, context, var_re=filecontent_var_re):
+def process_line(line, context, var_re=VAR_RE):
     if not var_re.findall(line):
         return line
 
@@ -77,12 +73,13 @@ def create(template_dir=None, target=None, context=None):
             continue
 
         dpath = dirname.replace(template_dir, target)
-        path = process_line(dpath, context, var_re=filesystem_var_re)
+        path = process_line(dpath, context)
 
         shell.mkdir_p(path)
         for fname in filelist:
+            dest_fname = process_line(fname, context)
             source = open(ospath.join(dirname, fname), "r")
-            dest = open(ospath.join(path, fname), "w")
+            dest = open(ospath.join(path, dest_fname), "w")
             for line in source.xreadlines():
                 dest.write(process_line(line, context))
             dest.close()

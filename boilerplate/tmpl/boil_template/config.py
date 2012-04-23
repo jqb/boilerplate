@@ -1,3 +1,2 @@
 from boilerplate import Configuration
-
-conf = Configuration(__file__, {})
+conf = Configuration(__file__)

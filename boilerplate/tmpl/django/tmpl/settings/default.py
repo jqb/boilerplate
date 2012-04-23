@@ -1,5 +1,5 @@
 PROJECT_ROOT = projectpath()
-SECRET_KEY = 'change_this'
+SECRET_KEY = '_$secret_key$_'
 
 ROOT_URLCONF = 'settings.urls'
 TIME_ZONE = 'Europe/Warsaw'
