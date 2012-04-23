@@ -99,7 +99,7 @@ class Create(Command):
         template.create(
             template_dir = config.get_template_absolute_path(),
             target = destination_path,
-            context = config.get_context(destination_name)
+            context = config.get_context(destination_name, template_name=template_name)
         )
         shell.rm_maches(destination_path, [
             re.compile(r'.*\.pyc'),

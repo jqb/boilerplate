@@ -26,28 +26,37 @@ import os.path as ospath
 from . import shell
 
 
-var_re = re.compile('(%s.*?%s)' % (
+filecontent_var_re = re.compile('(%s.*?%s)' % (
     re.escape('{{'), re.escape('}}')
 ))
 
-def resolve(text, context):
+
+filesystem_var_re = re.compile('(%s.*?%s)' % (
+    re.escape('_$'), re.escape('$_')
+))
+
+
+def resolve(text, context, var_re=filecontent_var_re):
     if not var_re.match(text):
         return text
 
     var_name = text.strip().strip('{{').strip('}}').strip()
+    var_name = text.strip().strip('_$').strip('$_').strip()
     val = context[var_name]
     try:
         return val()
     except TypeError:
         return val
 
-def process_line(line, context):
+
+def process_line(line, context, var_re=filecontent_var_re):
     if not var_re.findall(line):
         return line
 
     return "".join([
-        resolve(part, context) for part in var_re.split(line)
+        resolve(part, context, var_re=var_re) for part in var_re.split(line)
     ])
+
 
 def should_be_ignored(path):
     if path.endswith("pyc"):
@@ -55,6 +64,7 @@ def should_be_ignored(path):
 
     splited = path.split(ospath.sep)
     return ".git" in splited
+
 
 def create(template_dir=None, target=None, context=None):
     context = context or {}
@@ -66,7 +76,9 @@ def create(template_dir=None, target=None, context=None):
         if should_be_ignored(dirname):
             continue
 
-        path = dirname.replace(template_dir, target)
+        dpath = dirname.replace(template_dir, target)
+        path = process_line(dpath, context, var_re=filesystem_var_re)
+
         shell.mkdir_p(path)
         for fname in filelist:
             source = open(ospath.join(dirname, fname), "r")
@@ -85,8 +97,10 @@ class Configuration(object):
         self.config_file = config_file
         self.context = context or self.__class__.context
 
-    def get_context(self, dirname):
-        return self.context
+    def get_context(self, dirname, template_name=None):
+        ctx = dict(self.context)
+        ctx.update(project_name=dirname, template_name=template_name)
+        return ctx
 
     def get_template_absolute_path(self):
         return ospath.join(ospath.dirname(self.config_file), self.template_dir_name)
