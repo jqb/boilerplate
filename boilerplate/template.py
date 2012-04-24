@@ -24,6 +24,7 @@ import os
 import os.path as ospath
 
 from . import shell
+from .env import create_module_path
 
 
 VAR_START = '_$'
@@ -54,39 +55,43 @@ def process_line(line, context, var_re=VAR_RE):
     ])
 
 
-def should_be_ignored(path):
-    if path.endswith("pyc"):
-        return True
+class ProjectCreator(object):
+    def should_be_ignored(self, path):
+        if path.endswith("pyc"):
+            return True
 
-    splited = path.split(ospath.sep)
-    return ".git" in splited
+        splited = path.split(ospath.sep)
+        return ".git" in splited
+
+    def create(self, template_dir=None, target=None, context=None):
+        context = context or {}
+
+        template_dir = ospath.abspath(template_dir)
+        target = ospath.abspath(target)
+
+        for dirname, dirlist, filelist in os.walk(template_dir):
+            if self.should_be_ignored(dirname):
+                continue
+
+            dpath = dirname.replace(template_dir, target)
+            path = process_line(dpath, context)
+
+            shell.mkdir_p(path)
+            for fname in filelist:
+                dest_fname = process_line(fname, context)
+                source = open(ospath.join(dirname, fname), "r")
+                dest = open(ospath.join(path, dest_fname), "w")
+                for line in source.xreadlines():
+                    dest.write(process_line(line, context))
+                dest.close()
+                source.close()
 
 
-def create(template_dir=None, target=None, context=None):
-    context = context or {}
-
-    template_dir = ospath.abspath(template_dir)
-    target = ospath.abspath(target)
-
-    for dirname, dirlist, filelist in os.walk(template_dir):
-        if should_be_ignored(dirname):
-            continue
-
-        dpath = dirname.replace(template_dir, target)
-        path = process_line(dpath, context)
-
-        shell.mkdir_p(path)
-        for fname in filelist:
-            dest_fname = process_line(fname, context)
-            source = open(ospath.join(dirname, fname), "r")
-            dest = open(ospath.join(path, dest_fname), "w")
-            for line in source.xreadlines():
-                dest.write(process_line(line, context))
-            dest.close()
-            source.close()
+create = ProjectCreator().create
 
 
 class Configuration(object):
+    creator_class = ProjectCreator
     context = {}
     template_dir_name = "tmpl"
 
@@ -94,10 +99,19 @@ class Configuration(object):
         self.config_file = config_file
         self.context = context or self.__class__.context
 
-    def get_context(self, dirname, template_name=None):
+    def get_context(self, project_name, template_name=None):
         ctx = dict(self.context)
-        ctx.update(project_name=dirname, template_name=template_name)
+        ctx.update(project_name=project_name, template_name=template_name)
         return ctx
+
+    def get_creator(self):
+        return self.creator_class()
 
     def get_template_absolute_path(self):
         return ospath.join(ospath.dirname(self.config_file), self.template_dir_name)
+
+    def get_templates_path(self):
+        modulepath = create_module_path(__file__)
+        return modulepath('tmpl')
+
+

@@ -84,8 +84,10 @@ class Handler(object):
             return 2
 
         config = self.get_configuration(template_name)
+        creator = config.get_creator()
+
         destination_path = ospath.join(current_dir, project_name)
-        template.create(
+        creator.create(
             template_dir = config.get_template_absolute_path(),
             target = destination_path,
             context = config.get_context(project_name, template_name=template_name)
