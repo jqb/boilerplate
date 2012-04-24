@@ -5,7 +5,7 @@ variables and callable variables inside project and apps
 templates files.
 
 It procesess line of code, search for the variable name
-inside ``{{`` & ``}}`` parentheses. You need to pass
+inside ``_$`` & ``$_`` parentheses. You need to pass
 variable via context dictionary to complete processing.
 
 Module also contains function that's able to process
@@ -13,9 +13,9 @@ template directory and create project folder.
 
 Usage:
    >>> from boilerplate.template import process_line
-   >>> print process_line("def {{ function_name }}(*args, **kwargs):\n", {
-       'function_name': 'the_function',
-   })
+   >>> print process_line("def _$function_name$_(*args, **kwargs):\n", {
+   >>>     'function_name': 'the_function',
+   >>> })
    >>> def the_function(*args, **kwargs):
    >>>
 """
