@@ -86,32 +86,12 @@ class ProjectCreator(object):
                 dest.close()
                 source.close()
 
+    # HOOKS
+    def before_create(self, config, template_dir, destination_path):
+        pass
 
-create = ProjectCreator().create
-
-
-class Configuration(object):
-    creator_class = ProjectCreator
-    context = {}
-    template_dir_name = "tmpl"
-
-    def __init__(self, config_file, context=None):
-        self.config_file = config_file
-        self.context = context or self.__class__.context
-
-    def get_context(self, project_name, template_name=None):
-        ctx = dict(self.context)
-        ctx.update(project_name=project_name, template_name=template_name)
-        return ctx
-
-    def get_creator(self):
-        return self.creator_class()
-
-    def get_template_absolute_path(self):
-        return ospath.join(ospath.dirname(self.config_file), self.template_dir_name)
-
-    def get_templates_path(self):
-        modulepath = create_module_path(__file__)
-        return modulepath('tmpl')
-
-
+    def after_create(self, config, template_dir, destination_path):
+        shell.rm_maches(destination_path, [
+            re.compile(r'.*\.pyc'),
+        ])
+    # END OF HOOKS

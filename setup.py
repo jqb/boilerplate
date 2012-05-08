@@ -28,6 +28,6 @@ setup(
         'Operating System :: OS Independent',
         'Programming Language :: Python',
     ],
-    scripts=['bin/boilerplate'],
+    scripts=['bin/boil'],
     zip_safe=False,
 )

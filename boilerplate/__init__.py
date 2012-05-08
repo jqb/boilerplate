@@ -1,1 +1,1 @@
-from .template import Configuration
+from .conf import Configuration
