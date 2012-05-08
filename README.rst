@@ -4,7 +4,7 @@ boilerplate
 Very simple templating engine for directories & files structures.
 
 
-          UNDER DEVELOPMENT
+UNDER DEVELOPMENT
 
 
 How it works?
@@ -25,11 +25,11 @@ You can configurate context variables (only variables) which you can use everywh
 in your templates, even in files or directories structures.
 
 
-Benefits:
----------
+benefits
+--------
 
-1) templating is stupidily simple. Uses ONLY VARIABLES within "_$" and "$_".
-   It can be use for files & directory names as well as inside files contents.
+1) templating is really simple. Uses ONLY VARIABLES within "_$" and "$_".
+   It can be use for files & directory names as well as for files contents.
 
 2) it's easy. There's an buildin template for ease template creation::
 
@@ -44,4 +44,3 @@ Install
 -------
 
 Don't do this yet :)
-
