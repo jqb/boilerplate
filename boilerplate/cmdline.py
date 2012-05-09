@@ -86,6 +86,13 @@ class Handler(object):
             parser.print_usage(file=self.stderr)
             return 1
 
+        if template_name not in templates_list:
+            self.stderr.write("No such template: '%s'\n" % template_name)
+            self.stderr.write("Following places has been searched:\n")
+            for tmpl_dir in conf.templates_directories():
+                self.stderr.write("   %s\n" % tmpl_dir)
+            return 1
+
         template_place = self.get_template_place(templates_with_places, template_name)
         project_name = args[1]
 
@@ -96,7 +103,7 @@ class Handler(object):
         destination_path = ospath.join(os.getcwd(), project_name)
 
         if not ospath.exists(template_dir):
-            self.stderr.write("No such template directory: %s" % template_dir)
+            self.stderr.write("No such template directory: %s\n" % template_dir)
             return 2
 
         config = self.get_template_configuration(template_place, template_name)
@@ -108,5 +115,5 @@ class Handler(object):
             target = destination_path,
             context = config.get_context(project_name, template_name=template_name)
         )
-        create.after_create(config, template_dir, destination_path)
+        creator.after_create(config, template_dir, destination_path)
         return 0
