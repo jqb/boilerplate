@@ -1,1 +1,1 @@
-This "{{ project_name }}" project readme!
+This "_$project_name$_" project readme!
