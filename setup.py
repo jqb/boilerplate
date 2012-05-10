@@ -18,6 +18,7 @@ setup(
     author='Kuba Janoszek & Leszek Piatek',
     author_email='kuba.janoszek@gmail.com, lpiatek@gmail.com',
     include_package_data=True,
+    url='https://github.com/jqb/boilerplate',
     packages=find_packages(),
     package_data=package_data(osjoin("boilerplate", "tmpl")),
     classifiers=[
