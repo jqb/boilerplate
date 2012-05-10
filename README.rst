@@ -44,7 +44,7 @@ or directly from github::
   pip install -e git+git://github.com/jqb/boilerplate.git#egg=boilerplate
 
 
-You need to have root privilleges to install it in system packages.
+You need to have root privileges to install it in system packages.
 
 
 Set up BOILERPLATE_TEMPLATES environ variable to tell boilerplate where it
