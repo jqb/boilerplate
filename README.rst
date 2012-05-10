@@ -44,9 +44,7 @@ or directly from github::
   pip install -e git+git://github.com/jqb/boilerplate.git#egg=boilerplate
 
 
-.. NOTE::
-
-   You need to have root privilleges to install in system packages.
+You need to have root privilleges to install it in system packages.
 
 
 Set up BOILERPLATE_TEMPLATES environ variable to tell boilerplate where it
@@ -64,18 +62,15 @@ Boilerplate comes with "boil" command line. Here's how you might use it.
 #) listing existing templates::
 
    $> boil -l     # show list of all available templates, you can also type "boil --list"
-   boil_template
 
 
 #) creating new project from existing template::
 
-   $> boil <template-name> <project-name>
+    $> boil <template-name> <project-name>
 
 
-.. NOTE ::
-
-    ``project_name`` variable and ``template_name`` are always available your
-    template context.
+  ``project_name`` and ``template_name`` variables are always available your
+  template context.
 
 
 #) creating new project template::
