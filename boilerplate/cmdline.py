@@ -30,9 +30,13 @@ class Handler(object):
         parser.add_option("-l", "--list", action="store_true", dest="list", default=False)
         return parser
 
+    def get_templates_places(self):
+        return conf.templates_places()
+
     def get_templates_list(self):
-        names, names_with_places = [], []
-        for tmpl_place in conf.templates_directories():
+        result = template.TemplateList()
+
+        for tmpl_place in self.get_templates_places():
             if not ospath.exists(tmpl_place):
                 self.stdout.write(
                     "WARNING Directory: %s, does not exists, omiting.\n" % tmpl_place
@@ -42,30 +46,18 @@ class Handler(object):
             for dirname in os.listdir(tmpl_place):
                 dirpath = ospath.join(tmpl_place, dirname)
                 if ospath.isdir(dirpath):
-                    names.append(dirname)
-                    names_with_places.append((tmpl_place, dirname))
+                    result.append(template.Template(place=tmpl_place, name=dirname))
 
-        return names, names_with_places
-
-    def get_template_configuration(self, template_place, template_name):
-        sys.path.insert(0, template_place)
-        configuration_module = importlib.import_module('%s.config' % template_name)
-        sys.path.pop(0)
-        return configuration_module.conf
-
-    def get_template_place(self, templates_with_places, template_name):
-        for place, name in templates_with_places:
-            if template_name == name:
-                return place
+        return result
 
     def handle(self, argv):
         parser = self.parse_cmdline(argv)
         options, args = parser.parse_args(argv)
-        templates_list, templates_with_places = self.get_templates_list()
+        templates_list = self.get_templates_list()
 
         if options.list:
             for tmpl in templates_list:
-                self.stdout.write("%s\n" % tmpl)
+                self.stdout.write("%s\n" % tmpl.name)
             return 0
 
         if len(args) == 0:
@@ -78,7 +70,7 @@ class Handler(object):
 
         template_name = args[0]
 
-        if len(args) == 1 and template_name in templates_list:
+        if len(args) == 1:
             self.stderr.write(
                 "Please add project name"
                 "\n"
@@ -86,34 +78,21 @@ class Handler(object):
             parser.print_usage(file=self.stderr)
             return 1
 
-        if template_name not in templates_list:
+        if not templates_list.has_item_with(name=template_name):
             self.stderr.write("No such template: '%s'\n" % template_name)
             self.stderr.write("Following places has been searched:\n")
-            for tmpl_dir in conf.templates_directories():
+            for tmpl_dir in self.get_templates_places():
                 self.stderr.write("   %s\n" % tmpl_dir)
             return 1
 
-        template_place = self.get_template_place(templates_with_places, template_name)
+        template = templates_list.get_item_with(name=template_name)
         project_name = args[1]
 
-        return self.handle_project_creation(template_place, template_name, project_name)
-
-    def handle_project_creation(self, template_place, template_name, project_name):
-        template_dir = ospath.join(template_place, template_name)
-        destination_path = ospath.join(os.getcwd(), project_name)
-
-        if not ospath.exists(template_dir):
-            self.stderr.write("No such template directory: %s\n" % template_dir)
+        if not template.exists():
+            self.stderr.write("No such template directory: %s\n" % template.get_full_path())
             return 2
 
-        config = self.get_template_configuration(template_place, template_name)
-        creator = config.get_creator()
+        destination_path = ospath.join(os.getcwd(), project_name)
+        template.create(destination_path, project_name)
 
-        creator.before_create(config, template_dir, destination_path)
-        creator.create(
-            template_dir = config.get_template_absolute_path(),
-            target = destination_path,
-            context = config.get_context(project_name, template_name=template_name)
-        )
-        creator.after_create(config, template_dir, destination_path)
         return 0

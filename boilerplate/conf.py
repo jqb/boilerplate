@@ -6,11 +6,45 @@ from .env import create_module_path
 from .template import ProjectCreator
 
 
-modulepath = create_module_path(__file__)
+modulepath = create_module_path(__file__)  # boilerplate module path
 default_templates_dir = modulepath('tmpl')
 
 
-def templates_directories(paths_environ_name='BOILERPLATE_TEMPLATES', paths_sep=':'):
+def templates_places(paths_environ_name='BOILERPLATE_TEMPLATES', paths_sep=':'):
+    """
+    Returns all places in the file system where we should search for templates.
+    Default templates in boilerplate module are defined in the boilerplate packege
+    and are always available. The other places you can define in BOILERPLATE_TEMPLATES
+    environment variable.
+
+    For example, if you do not have BOILERPLATE_TEMPLATES defined this is what you might
+    get in the command line
+
+    ::
+
+        $ boil -l
+        boil_template
+
+    "boil_template" is the bulid in template (which you can use to create other templates).
+    Once you defined BOILERPLATE_TEMPLATES as follows, you will be able to use your one
+    templates (or third parties).
+
+    ::
+
+        $ mkdir -p /home/user/.boilerplate_templates/
+        $ export BOILERPLATE_TEMPLATES=/home/user/.boilerplate_templates/
+        $ cd $BOILERPLATE_TEMPLATES
+        $ boil boil_template my_fancy_template
+
+    And now you'll be able to use your new shiny "my_fancy_template"
+
+    ::
+
+        $ boil -l
+        boil_template
+        my_fancy_template
+
+    """
     paths = os.environ.get(paths_environ_name, '').split(paths_sep)
     paths.insert(0, default_templates_dir)
     return filter(lambda x:x, paths)

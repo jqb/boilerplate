@@ -21,9 +21,10 @@ Usage:
 """
 import re
 import os
+import sys
 import os.path as ospath
 
-from . import shell
+from . import shell, importlib
 from .env import create_module_path
 
 
@@ -87,11 +88,67 @@ class ProjectCreator(object):
                 source.close()
 
     # HOOKS
-    def before_create(self, config, template_dir, destination_path):
+    def before_create(self, destination_path):
         pass
 
-    def after_create(self, config, template_dir, destination_path):
+    def after_create(self, destination_path):
         shell.rm_maches(destination_path, [
             re.compile(r'.*\.pyc'),
         ])
     # END OF HOOKS
+
+
+class Template(object):
+    """
+    Class that represents template directory. It has:
+    - ``place`` where it is eg. /home/user/.boilerplate_templates/
+    - ``name`` of the template
+
+    Template directory should have following structure:
+
+    ::
+
+        <template-name>/
+            |-- __init__.py  # this make possible to tread <template-name> as python module
+            |-- config.py    # configuration with ``conf`` variable
+            `-- tmpl/        # the template contents
+
+    """
+    def __init__(self, place=None, name=None):
+        self.name = name
+        self.place = place
+
+    def exists(self):
+        return ospath.exists(self.get_full_path())
+
+    def get_full_path(self):
+        return ospath.join(self.place, self.name)
+
+    def get_configuration(self):
+        sys.path.insert(0, self.place)
+        configuration_module = importlib.import_module('%s.config' % self.name)
+        sys.path.pop(0)
+        return configuration_module.conf
+
+    def create(self, destination_path, project_name):
+        config = self.get_configuration()
+        creator = config.get_creator()
+
+        creator.before_create(destination_path)
+        creator.create(
+            template_dir = config.get_template_absolute_path(),
+            target = destination_path,
+            context = config.get_context(project_name, template_name=self.name)
+        )
+        creator.after_create(destination_path)
+
+
+class TemplateList(list):
+    def get_item_with(self, name=None):
+        for tmpl in self:
+            if tmpl.name == name:
+                return tmpl
+        return None
+
+    def has_item_with(self, name=None):
+        return self.get_item_with(name=name) is not None
