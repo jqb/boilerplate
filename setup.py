@@ -13,7 +13,7 @@ def package_data(path):
 
 setup(
     name='boilerplate',
-    version='0.8',
+    version='1.0 alpha',
     description='boilerplate tool for painless project layout templating',
     author='Kuba Janoszek & Leszek Piatek',
     author_email='kuba.janoszek@gmail.com, lpiatek@gmail.com',
@@ -30,4 +30,5 @@ setup(
     ],
     scripts=['bin/boil'],
     zip_safe=False,
+    setup_requires=['setuptools_git'],
 )
