@@ -16,7 +16,7 @@ def package_data(path):
 setup(
     name='boilerplate',
     version=boilerplate.VERSION,
-    description='boilerplate tool for painless project layout templating',
+    description='Easy to use ool for painless project layout templating',
     author='Kuba Janoszek',
     author_email='kuba.janoszek@gmail.com',
     include_package_data=True,

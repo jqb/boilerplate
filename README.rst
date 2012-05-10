@@ -1,7 +1,7 @@
 boilerplate
 -----------
 
-ver. 1.0 alpha
+ver. 1.0 beta
 
 
 Very simple templating engine for directories & files structures.
@@ -16,7 +16,7 @@ some dynamic parts (like SECRET_KEY in django project).
 
 
 How it works?
--------------
+=============
 
 ::
 
@@ -33,15 +33,19 @@ in your templates, even in files or directories structures.
 
 
 How to install?
----------------
+===============
 
-Download and install::
+1) Pip::
 
-  python setup.py install
+   $> pip install boilerplate
 
-or directly from github::
+2) Download and install::
 
-  pip install -e git+git://github.com/jqb/boilerplate.git#egg=boilerplate
+   $> python setup.py install
+
+3) Or directly from github::
+
+   $> pip install -e git+git://github.com/jqb/boilerplate.git#egg=boilerplate
 
 
 You need to have root privileges to install it in system packages.
@@ -55,7 +59,7 @@ eg in your .bashrc ::
 
 
 Usage
------
+=====
 
 Boilerplate comes with "boil" command line. Here's how you might use it.
 
@@ -69,19 +73,19 @@ Boilerplate comes with "boil" command line. Here's how you might use it.
     $> boil <template-name> <project-name>
 
 
-  ``project_name`` and ``template_name`` variables are always available your
-  template context.
+    ``project_name`` and ``template_name`` variables are always available your
+    template context.
 
 
 #) creating new project template::
 
-   $> cd $BOILERPLATE_TEMPLATES
-   $> boil boil_template my_first_template
+    $> cd $BOILERPLATE_TEMPLATES
+    $> boil boil_template my_first_template
 
 
 This is what you gonna get::
 
-   $BOILERPLATE_TEMPLATES/my_first_template/
+    $BOILERPLATE_TEMPLATES/my_first_template/
        |-- __init__.py
        |-- config.py    # meta information about template, context variables for template engine
        `-- tmpl/        # template directory, name "tmpl" will be replaced with "project_name"
@@ -94,6 +98,6 @@ This is what you gonna get::
 
 
 TODO
-----
+====
 
-  * docs for all features available via Configuration objects
+* docs for all features available via Configuration objects
