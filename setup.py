@@ -2,6 +2,8 @@ import os
 from os.path import join as osjoin
 from setuptools import setup, find_packages
 
+import boilerplate
+
 
 def package_data(path):
     data_files = {}
@@ -11,17 +13,14 @@ def package_data(path):
     return data_files
 
 
-version = 'ver-1.0-alpha'
-
-
 setup(
     name='boilerplate',
-    version=version,
+    version=boilerplate.VERSION,
     description='boilerplate tool for painless project layout templating',
-    author='Kuba Janoszek & Leszek Piatek',
-    author_email='kuba.janoszek@gmail.com, lpiatek@gmail.com',
+    author='Kuba Janoszek',
+    author_email='kuba.janoszek@gmail.com',
     include_package_data=True,
-    url='https://github.com/jqb/boilerplate/tree/%s' % version,
+    url='https://github.com/jqb/boilerplate/tree/ver-%s' % boilerplate.VERSION,
     packages=find_packages(),
     package_data=package_data(osjoin("boilerplate", "tmpl")),
     classifiers=[
