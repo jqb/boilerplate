@@ -89,7 +89,7 @@ This is what you gonna get::
        |-- __init__.py
        |-- config.py    # meta information about template, context variables for template engine
        `-- tmpl/        # template directory, name "tmpl" will be replaced with "project_name"
-             `-- my_fancy_template_readme.txt
+             `-- my_first_template_readme.txt
 
 
 #) using my new project template::
