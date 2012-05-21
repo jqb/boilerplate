@@ -30,5 +30,6 @@ class CommandLineHandlerTest(unittest.TestCase):
         assert len(res) > 1, "There should be at least one template by default."
 
 
+
 if __name__ == '__main__':
     unittest.main()

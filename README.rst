@@ -110,4 +110,3 @@ TODO
 * right now there's no opportunity to create single-file templates
   (main project directory is always created), maybe there should be
   such option?
-
