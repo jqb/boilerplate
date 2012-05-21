@@ -25,7 +25,7 @@ import sys
 import os.path as ospath
 
 from . import shell, importlib
-from .env import create_module_path
+from .utils import create_module_path
 
 
 VAR_START = '_$'

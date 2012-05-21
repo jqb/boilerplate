@@ -2,7 +2,7 @@
 import os
 import os.path as ospath
 
-from .env import create_module_path
+from .utils import create_module_path
 from .template import ProjectCreator
 
 
