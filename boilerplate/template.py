@@ -57,12 +57,30 @@ def process_line(line, context, var_re=VAR_RE):
 
 
 class ProjectCreator(object):
-    def should_be_ignored(self, path):
-        if path.endswith("pyc"):
-            return True
+    def __init__(self, ignore_files, ignore_directories):
+        self.ignore_directories = ignore_directories
+        self.ignore_files = ignore_files
 
-        splited = path.split(ospath.sep)
-        return ".git" in splited
+    def directory_should_be_ignored(self, path):
+        for pattern in self.ignore_directories:
+            if pattern.match(path):
+                return True
+        return False
+
+    def file_should_be_ignored(self, path):
+        for pattern in self.ignore_files:
+            if pattern.match(path):
+                return True
+        return False
+
+    def apply_context(self, path, context):
+        return process_line(path, context)
+
+    def create_directory(self, dirpath, p=False):
+        if p:
+            shell.mkdir_p(dirpath)
+        else:
+            shell.mkdir(dirpath)
 
     def create(self, template_dir=None, target=None, context=None):
         context = context or {}
@@ -71,30 +89,65 @@ class ProjectCreator(object):
         target = ospath.abspath(target)
 
         for dirname, dirlist, filelist in os.walk(template_dir):
-            if self.should_be_ignored(dirname):
+            if self.directory_should_be_ignored(dirname):
+                self.directory_ignored(dirname)
                 continue
 
-            dpath = dirname.replace(template_dir, target)
-            path = process_line(dpath, context)
+            destination_dir_path = dirname.replace(template_dir, target)
+            destination_dir_path = self.apply_context(destination_dir_path, context)
 
-            shell.mkdir_p(path)
+            if destination_dir_path != target:
+                self.before_directory_create(destination_dir_path)
+                self.create_directory(destination_dir_path)
+                self.after_directory_create(destination_dir_path)
+
             for fname in filelist:
-                dest_fname = process_line(fname, context)
-                source = open(ospath.join(dirname, fname), "r")
-                dest = open(ospath.join(path, dest_fname), "w")
+                if self.file_should_be_ignored(fname):
+                    self.file_ignored(fname)
+                    continue
+
+                destination_file_name = self.apply_context(fname, context)
+                destination_file_path = ospath.join(
+                    destination_dir_path,
+                    destination_file_name
+                )
+                template_file_path = ospath.join(dirname, fname)
+
+                self.before_file_create(destination_file_path)
+
+                dest = open(destination_file_path, "w")
+                source = open(template_file_path, "r")
                 for line in source.xreadlines():
-                    dest.write(process_line(line, context))
+                    dest.write(self.apply_context(line, context))
                 dest.close()
                 source.close()
 
+                self.after_file_create(destination_file_path)
+
     # HOOKS
+    def directory_ignored(self, dirname):
+        print "DIRECTORY IGNORED:", dirname
+
+    def file_ignored(self, dirname):
+        pass
+
+    def before_file_create(self, destination_file_path):
+        pass
+
+    def after_file_create(self, destination_file_path):
+        pass
+
+    def before_directory_create(self, destination_dir_path):
+        pass
+
+    def after_directory_create(self, destination_dir_path):
+        print "    ", destination_dir_path
+
     def before_create(self, destination_path):
         pass
 
     def after_create(self, destination_path):
-        shell.rm_maches(destination_path, [
-            re.compile(r'.*\.pyc'),
-        ])
+        pass
     # END OF HOOKS
 
 

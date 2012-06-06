@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import os
 from os.path import join as osjoin
 from setuptools import setup, find_packages
@@ -33,5 +34,4 @@ setup(
     ],
     scripts=['bin/boil'],
     zip_safe=False,
-    setup_requires=['setuptools_git'],
 )

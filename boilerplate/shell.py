@@ -15,6 +15,10 @@ def mkdir_p(*path):
             raise
 
 
+def mkdir(*path):
+    os.makedirs(ospath.join(*path))
+
+
 def rm_maches(path, patterns=None):
     patterns = patterns or []
 

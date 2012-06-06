@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
+import re
 import os
 import os.path as ospath
 
 from .utils import create_module_path
 from .template import ProjectCreator
+from . import filematchers as matchers
 
 
 modulepath = create_module_path(__file__)  # boilerplate module path
@@ -54,6 +56,12 @@ class Configuration(object):
     creator_class = ProjectCreator
     context = {}
     template_dir_name = "tmpl"
+    ignore_directories = [
+        matchers.git_directory,
+    ]
+    ignore_files = [
+        matchers.pyc_files,
+    ]
 
     def __init__(self, config_file, context=None):
         self.config_file = config_file
@@ -65,7 +73,7 @@ class Configuration(object):
         return ctx
 
     def get_creator(self):
-        return self.creator_class()
+        return self.creator_class(self.ignore_files, self.ignore_directories)
 
     def get_template_absolute_path(self):
         return ospath.join(ospath.dirname(self.config_file), self.template_dir_name)

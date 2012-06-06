@@ -107,6 +107,3 @@ TODO
   on posix and ``$HOME/BoilerplateTemplates`` on windows/nt
 * information about currently processing file / directory should be displayed
   on project generation.
-* right now there's no opportunity to create single-file templates
-  (main project directory is always created), maybe there should be
-  such option?

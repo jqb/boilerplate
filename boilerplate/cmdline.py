@@ -92,7 +92,7 @@ class Handler(object):
             self.stderr.write("No such template directory: %s\n" % template.get_full_path())
             return 2
 
-        destination_path = ospath.join(os.getcwd(), project_name)
+        destination_path = ospath.join(os.getcwd())
         template.create(destination_path, project_name)
 
         return 0
