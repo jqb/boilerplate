@@ -1,30 +1,39 @@
 boilerplate
 -----------
 
-ver. 1.0 beta
+ver. 1.1 beta
 
 
 Very simple templating engine for directories & files structures.
 
 
-Creating project structure is not thing I'm doing everyday. Nevertheless
+Creating project structure is not a thing I'm doing everyday. Nevertheless
 when I'm doing it I always feel frustrated that I don't have anything
 prepared. Or when I use some third parties templates I'm pissed off when
 "all I need to do is clone repo, remove .git directory, clean README..."
 and so on. Using such things is hard because all those templates has also
-some dynamic parts (like SECRET_KEY in django project).
+some dynamic parts (like SECRET_KEY in django projects).
 
 
 How it works?
 =============
+
+After installation new ``boil`` command line tool wil be available for you.
+All you need to do is:
+
+1) create you template (eq. ``myfancy_template``) with specialy formed ``_$variables$_``
+2) setup all variables parts in ``config.py`` file
+3) use your template
 
 ::
 
    myfancy_template/                                                      simpleapp/
      |-- config.py                 $> boil myfancy_template simpleapp        |-- __init__.py
      `-- tmpl/                     =================================>        `-- simpleapp.py
-           |-- __init__.py
-           `-- _$project_name$_.py
+           |
+           `-- _$project_name$_/
+                  |-- __init__.py
+                  `-- _$project_name$_.py
 
 
 Boilerplate simply creates project / app structure on the given template basis.
@@ -89,10 +98,13 @@ This is what you gonna get::
        |-- __init__.py
        |-- config.py    # meta information about template, context variables for template engine
        `-- tmpl/        # template directory, name "tmpl" will be replaced with "project_name"
-             `-- my_first_template_readme.txt
+             |
+             `-- my_first_template/
+                   |
+                   `-- my_first_template_readme.txt
 
 
-#) using my new project template::
+#) using your new project template::
 
     $> boil my_first_template myproject
 
