@@ -5,7 +5,7 @@ import optparse
 import os
 import os.path as ospath
 
-from . import shell, importlib, template, conf
+from . import shell, importlib, template, conf, VERSION
 
 
 def handle(argv):
@@ -17,17 +17,49 @@ class HandlerException(Exception):
     pass
 
 
+completion = dict(
+    bash = """
+# boilerplate bash completion start
+_boilerplate_completion()
+{
+    COMPREPLY=( $( COMP_WORDS="${COMP_WORDS[*]}" \
+                   COMP_CWORD=$COMP_CWORD \
+                   BOILERPLATE_AUTO_COMPLETE=1 $1 ) )
+}
+complete -o default -F _boilerplate_completion boil
+# boilerplate bash completion end
+""",
+)
+
+
+class OptionParser(optparse.OptionParser):
+    def get_matches(self, comp_word):
+        """
+        Returns list of options that mathes given ``comp_word``
+        """
+        result = []
+        for opt in self.option_list:
+            for opt_str in opt._short_opts + opt._long_opts:
+                if opt_str.startswith(comp_word):
+                    result.append(opt_str)
+        return result
+
+
 class Handler(object):
+    completion = completion
+
     def __init__(self, stdout=sys.stdout, stderr=sys.stderr):
         self.stdout = stdout
         self.stderr = stderr
 
     def parse_cmdline(self, argv):
-        parser = optparse.OptionParser(
+        parser = OptionParser(
             usage = "usage: %prog <template-name> <project-name>",
             description = "Project structure generation tool",
         )
         parser.add_option("-l", "--list", action="store_true", dest="list", default=False)
+        parser.add_option("-v", "--version", action="store_true", dest="version", default=False)
+        parser.add_option("--bash-completion", action="store_true", dest="bash_completion", default=False)
         return parser
 
     def get_templates_places(self):
@@ -50,14 +82,55 @@ class Handler(object):
 
         return result
 
+    # XXX: move it to other ``Completer`` class or sth like this
+    # COMPLETION METHODS
+    def completion_request(self):
+        return os.environ.get('BOILERPLATE_AUTO_COMPLETE') == '1'
+
+    def can_do_completion(self):
+        return len(self.get_complete_words()) <= 1
+
+    def get_complete_words(self):
+        return os.environ.get('COMP_WORDS', '').split(" ")[1:]
+
+    def concat(self, words, delimiter=' '):
+        return delimiter.join(words)
+
+    def handle_completion(self, parser):
+        if self.can_do_completion():
+            first = self.get_complete_words()[0]
+            self.stdout.write(self.concat([
+                t.name
+                for t in self.get_templates_list()
+                if t.name.startswith(first)
+            ]))
+            if first.startswith('-'):
+                self.stdout.write(self.concat(
+                    parser.get_matches(first)
+                ))
+            self.stdout.write("")
+    # END OF COMPLETION METHODS
+
     def handle(self, argv):
         parser = self.parse_cmdline(argv)
         options, args = parser.parse_args(argv)
         templates_list = self.get_templates_list()
 
+        if self.completion_request():
+            self.handle_completion(parser)
+            return 0
+
+        if options.version:
+            self.stdout.write("%s\n" % VERSION)
+            return 0
+
         if options.list:
             for tmpl in templates_list:
                 self.stdout.write("%s\n" % tmpl.name)
+            return 0
+
+        if options.bash_completion:
+            self.stdout.write(self.completion['bash'])
             return 0
 
         if len(args) == 0:
