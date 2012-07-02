@@ -114,14 +114,7 @@ class ProjectCreator(object):
                 template_file_path = ospath.join(dirname, fname)
 
                 self.before_file_create(destination_file_path)
-
-                dest = open(destination_file_path, "w")
-                source = open(template_file_path, "r")
-                for line in source.xreadlines():
-                    dest.write(self.apply_context(line, context))
-                dest.close()
-                source.close()
-
+                self.create_file(template_file_path, destination_file_path, context)
                 self.after_file_create(destination_file_path)
 
     # HOOKS
@@ -133,6 +126,14 @@ class ProjectCreator(object):
 
     def before_file_create(self, destination_file_path):
         pass
+
+    def create_file(self, source_path, dest_path, context):
+        dest = open(dest_path, "w")
+        source = open(source_path, "r")
+        for line in source.xreadlines():
+            dest.write(self.apply_context(line, context))
+        dest.close()
+        source.close()
 
     def after_file_create(self, destination_file_path):
         pass

@@ -1,0 +1,8 @@
+* ver 1.1.2-beta
+  - readme todo items updated
+  - creating a file in boilerplate.template.ProjectCreator moved to
+    separate method "create_file", so for now there is posibility to
+    apply your own templating engine for files
+
+* ver 1.1-beta
+  - initial version with bash completion available, docs not well enought
