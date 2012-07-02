@@ -117,5 +117,3 @@ TODO
   maybe ``--create-template-dir`` is a good idea.
   Default place for BOILERPLATE_TEMPLATES should be ``$HOME/.boilerplate_templates``
   on posix and ``$HOME/BoilerplateTemplates`` on windows/nt
-* information about currently processing file / directory should be displayed
-  on project generation.
