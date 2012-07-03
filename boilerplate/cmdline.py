@@ -70,9 +70,10 @@ class Handler(object):
 
         for tmpl_place in self.get_templates_places():
             if not ospath.exists(tmpl_place):
-                self.stdout.write(
-                    "WARNING Directory: %s, does not exists, omiting.\n" % tmpl_place
-                )
+                if not self.completion_request():
+                    self.stdout.write(
+                        "WARNING Directory: %s, does not exists, omitting.\n" % tmpl_place
+                    )
                 continue
 
             for dirname in os.listdir(tmpl_place):
