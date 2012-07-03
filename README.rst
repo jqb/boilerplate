@@ -124,5 +124,3 @@ TODO
 * docs for all features available via Configuration objects
 * make defining BOILERPLATE_TEMPLATES variable optional,
   maybe ``--create-template-dir`` is a good idea.
-  Default place for BOILERPLATE_TEMPLATES should be ``$HOME/.boilerplate_templates``
-  on posix and ``$HOME/BoilerplateTemplates`` on windows/nt
