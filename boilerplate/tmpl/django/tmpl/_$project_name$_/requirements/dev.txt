@@ -1,2 +1,0 @@
-ipython
-django-debug-toolbar
