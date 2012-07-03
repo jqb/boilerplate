@@ -3,32 +3,38 @@ import re
 import os
 import os.path as ospath
 
-from .utils import create_module_path
+from .utils import create_module_path, userhome_path, paths_separator
 from .template import ProjectCreator
 from . import filematchers as matchers
 
 
 modulepath = create_module_path(__file__)  # boilerplate module path
 default_templates_dir = modulepath('tmpl')
+default_user_templates_dir_name = ".boilerplate_templates"
 
 
-def templates_places(paths_environ_name='BOILERPLATE_TEMPLATES', paths_sep=':'):
+def templates_places(paths_environ_name='BOILERPLATE_TEMPLATES',
+                     paths_sep=paths_separator,
+                     user_templates_dir_name=default_user_templates_dir_name):
     """
     Returns all places in the file system where we should search for templates.
-    Default templates in boilerplate module are defined in the boilerplate packege
+    Default templates in boilerplate module are defined in the boilerplate package
     and are always available. The other places you can define in BOILERPLATE_TEMPLATES
     environment variable.
 
     For example, if you do not have BOILERPLATE_TEMPLATES defined this is what you might
-    get in the command line
+    get in the command line.
+
+    Default value of BOILERPLATE_TEMPLATES is "$HOME/.boilerplate_templates", so you
+    can just create the directory and start to create your own templates.
 
     ::
 
         $ boil -l
         boil_template
 
-    "boil_template" is the bulid in template (which you can use to create other templates).
-    Once you defined BOILERPLATE_TEMPLATES as follows, you will be able to use your one
+    "boil_template" is the build in template (which you can use to create other templates).
+    Once you defined BOILERPLATE_TEMPLATES as follows, you will be able to use your own
     templates (or third parties).
 
     ::
@@ -47,7 +53,10 @@ def templates_places(paths_environ_name='BOILERPLATE_TEMPLATES', paths_sep=':'):
         my_fancy_template
 
     """
-    paths = os.environ.get(paths_environ_name, '').split(paths_sep)
+    paths = os.environ.get(
+        paths_environ_name,
+        userhome_path(user_templates_dir_name)
+    ).split(paths_sep)
     paths.insert(0, default_templates_dir)
     return filter(lambda x:x, paths)
 

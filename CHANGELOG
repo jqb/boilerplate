@@ -1,3 +1,6 @@
+* var 1.2-beta
+  - BOILERPLATE_TEMPLATES setup to ".boilerplate_templates" by default
+
 * ver 1.1.2-beta
   - readme todo items updated
   - creating a file in boilerplate.template.ProjectCreator moved to

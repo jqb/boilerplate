@@ -28,4 +28,12 @@ _systems = {
 
 def userhome_path(*path):
     get_home_path = _systems[os.name]
-    return get_home_path(path)
+    return get_home_path(*path)
+
+
+_systems_paths_sep = {
+    'posix': ':',
+    'nt': ';',
+}
+
+paths_separator = _systems_paths_sep[os.name]
