@@ -1,7 +1,7 @@
 boilerplate
 -----------
 
-ver. 1.1 beta
+ver. 1.2 beta
 
 
 Very simple templating engine for directories & files structures.
@@ -38,7 +38,7 @@ All you need to do is:
 
 Boilerplate simply creates project / app structure on the given template basis.
 You can configurate context variables (only variables) which you can use everywhere
-in your templates, even in files or directories structures.
+in your templates, even for files or directories names.
 
 
 How to install?
@@ -60,11 +60,20 @@ How to install?
 You need to have root privileges to install it in system packages.
 
 
-Set up BOILERPLATE_TEMPLATES environ variable to tell boilerplate where it
-should search for your custom templates. It should be setup in your <dot>-file,
-eg in your .bashrc ::
+By default boilerplate search for templates in ``$HOME/.boilerplate_templates``
+so it's enough if you just create that directory and place your templates there.
 
-  export BOILERPLATE_TEMPLATES=$HOME/.boilerplate_temlplates
+
+You can also set up BOILERPLATE_TEMPLATES environ variable to tell boilerplate where it
+should search for your custom templates. You can (should?) setup it in your <dot>-file,
+eg in .bashrc ::
+
+  export BOILERPLATE_TEMPLATES=$HOME/.custom_templates
+
+
+You probably would also want to turn on bash completion in your rc-file::
+
+  eval "`boil --bash-completion`"
 
 
 Usage
@@ -88,7 +97,7 @@ Boilerplate comes with "boil" command line. Here's how you might use it.
 
 #) creating new project template::
 
-    $> cd $BOILERPLATE_TEMPLATES
+    $> cd $BOILERPLATE_TEMPLATES  # just go to your templates directory
     $> boil boil_template my_first_template
 
 
@@ -97,11 +106,11 @@ This is what you gonna get::
     $BOILERPLATE_TEMPLATES/my_first_template/
        |-- __init__.py
        |-- config.py    # meta information about template, context variables for template engine
-       `-- tmpl/        # template directory, name "tmpl" will be replaced with "project_name"
+       `-- tmpl/        # template directory
              |
-             `-- my_first_template/
+             `-- _$project_name$_/
                    |
-                   `-- my_first_template_readme.txt
+                   `-- _$project_name$__readme.txt
 
 
 #) using your new project template::
