@@ -5,7 +5,7 @@ import optparse
 import os
 import os.path as ospath
 
-from . import shell, importlib, template, conf, VERSION
+from . import shell, importlib, template, conf, filematchers, VERSION
 
 
 def handle(argv):
@@ -65,6 +65,13 @@ class Handler(object):
     def get_templates_places(self):
         return conf.templates_places()
 
+    def is_template(self, dirpath):
+        return all([
+            ospath.isdir(dirpath),
+            not filematchers.git_directory.match(dirpath),
+            not filematchers.svn_directory.match(dirpath),
+        ])
+
     def get_templates_list(self):
         result = template.TemplateList()
 
@@ -78,7 +85,7 @@ class Handler(object):
 
             for dirname in os.listdir(tmpl_place):
                 dirpath = ospath.join(tmpl_place, dirname)
-                if ospath.isdir(dirpath):
+                if self.is_template(dirpath):
                     result.append(template.Template(place=tmpl_place, name=dirname))
 
         return result

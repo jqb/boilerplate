@@ -3,11 +3,15 @@ import re
 from os import path as ospath
 
 
-class GitDirectory(object):
+class DirectoryMatcher(object):
+    def __init__(self, name):
+        self.name = name
+
     def match(self, path):
         splited = path.split(ospath.sep)
-        return ".git" in splited
+        return self.name in splited
 
 
-git_directory = GitDirectory()
+git_directory = DirectoryMatcher(".git")
+svn_directory = DirectoryMatcher(".svn")
 pyc_files = re.compile('.*\.pyc$')

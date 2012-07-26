@@ -67,6 +67,7 @@ class Configuration(object):
     template_dir_name = "tmpl"
     ignore_directories = [
         matchers.git_directory,
+        matchers.svn_directory,
     ]
     ignore_files = [
         matchers.pyc_files,
