@@ -146,39 +146,72 @@ Boilerplate comes with "boil" command line. Here's how you might use it.
 
    - ``directory_ignored`` - invoked every time when directory with ``dirname``
      from the template was ignored
-     :param: dirname
 
-    - ``file_ignored`` - invoked every time when file with ``file_name`` from the
-      template was ignored
-      :param: file_name
+     signature::
 
-    - ``before_file_create`` - invoked before every file creation. ``destination_file_path``
-      param contains full path to new file
-      :param: destination_file_path
+         def directory_ignored(dirname)
 
-    - ``create_file`` - invoked for file creation. It acctually has implementation
-      that uses builtin simple template language. You can redefine it in order change
-      template engine to your favourite one.
-      :param: source_path
-      :param: dest_path
-      :param: context
 
-    - ``after_file_create`` - invoked with full ``destination_file_path`` after every
-      file creation.
-      :param: destination_file_path
+   - ``file_ignored`` - invoked every time when file with ``file_name`` from the
+     template was ignored
 
-    - ``before_directory_create``
-      :param: destination_dir_path
+     signature::
 
-    - ``after_directory_create``
-      :param: destination_dir_path
+         def file_ignored(file_name)
 
-    - ``before_create`` - invoked before creation of the project with ``destination_path``
-      param that contains path to the place where ``boil`` command was invoked
-      :param: destination_path
 
-    - ``after_create`` - same as ``before_create`` except it is invoked *after* creation.
-      :param: destination_path
+   - ``before_file_create`` - invoked before every file creation. ``destination_file_path``
+     param contains full path to new file
+
+     signature::
+
+         def before_directory_create(destination_file_path)
+
+
+   - ``create_file`` - invoked for file creation. It acctually has implementation
+     that uses builtin simple template language. You can redefine it in order change
+     template engine to your favourite one
+
+     signature::
+
+         def create_file(source_path, dest_path, context)
+
+
+   - ``after_file_create`` - invoked with full ``destination_file_path`` after every
+     file creation.
+
+     signature::
+
+         def after_file_create(destination_file_path)
+
+
+   - ``before_directory_create``
+
+     signature::
+
+         def before_directory_create(destination_dir_path)
+
+
+   - ``after_directory_create``
+
+     signature::
+
+         def after_directory_create(destination_dir_path)
+
+
+   - ``before_create`` - invoked before creation of the project with ``destination_path``
+     param that contains path to the place where ``boil`` command was invoked
+
+     signature::
+
+         def before_create(destination_path)
+
+
+   - ``after_create`` - same as ``before_create`` except it is invoked *after* creation.
+
+     signature::
+
+         def after_create(destination_path)
 
 
 
