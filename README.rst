@@ -1,7 +1,7 @@
 boilerplate
 -----------
 
-ver. 1.2 beta
+ver. 1.2.2 beta
 
 
 Very simple templating engine for directories & files structures.
@@ -101,7 +101,7 @@ Boilerplate comes with "boil" command line. Here's how you might use it.
     $> boil boil_template my_first_template
 
 
-This is what you gonna get::
+    This is what you gonna get::
 
     $BOILERPLATE_TEMPLATES/my_first_template/
        |-- __init__.py
@@ -116,6 +116,70 @@ This is what you gonna get::
 #) using your new project template::
 
     $> boil my_first_template myproject
+
+
+#) more controll over creation process
+
+   You are allowed to redifine hooks by passing subclass of ``boilerplate.ProjectCreator``
+   to the ``boilerplate.Configuration`` objects in your template ``config.py`` file.
+   Eg. if you want to change mode of ``manage.py`` in your own django project template,
+   you can do it in this way::
+
+
+       # $BOILERPLATE_TEMPLATES/my_fancy_django_project_template/config.py
+       import subprocess
+       from boilerplate import Configuration, ProjectCreator as PC
+
+
+       class ProjectCreator(PC):
+           def after_file_create(self, destination_path):
+               if destination_path.endswith('manage.py'):
+                   subprocess.call(['chmod', '+x', destination_path])
+
+
+       conf = Configuration(__file__, {
+           # put your context variables here, to use them in your project template
+       }, creator_class=ProjectCreator)
+
+
+   Here's a list of available hooks:
+
+   - ``directory_ignored`` - invoked every time when directory with ``dirname``
+     from the template was ignored
+     :param: dirname
+
+    - ``file_ignored`` - invoked every time when file with ``file_name`` from the
+      template was ignored
+      :param: file_name
+
+    - ``before_file_create`` - invoked before every file creation. ``destination_file_path``
+      param contains full path to new file
+      :param: destination_file_path
+
+    - ``create_file`` - invoked for file creation. It acctually has implementation
+      that uses builtin simple template language. You can redefine it in order change
+      template engine to your favourite one.
+      :param: source_path
+      :param: dest_path
+      :param: context
+
+    - ``after_file_create`` - invoked with full ``destination_file_path`` after every
+      file creation.
+      :param: destination_file_path
+
+    - ``before_directory_create``
+      :param: destination_dir_path
+
+    - ``after_directory_create``
+      :param: destination_dir_path
+
+    - ``before_create`` - invoked before creation of the project with ``destination_path``
+      param that contains path to the place where ``boil`` command was invoked
+      :param: destination_path
+
+    - ``after_create`` - same as ``before_create`` except it is invoked *after* creation.
+      :param: destination_path
+
 
 
 TODO

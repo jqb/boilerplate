@@ -73,9 +73,10 @@ class Configuration(object):
         matchers.pyc_files,
     ]
 
-    def __init__(self, config_file, context=None):
+    def __init__(self, config_file, context=None, creator_class=None):
         self.config_file = config_file
         self.context = context or self.__class__.context
+        self.creator_class = creator_class or self.__class__.creator_class
 
     def get_context(self, project_name, template_name=None):
         ctx = dict(self.context)

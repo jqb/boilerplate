@@ -1,3 +1,8 @@
+* ver 1.2.2-beta
+  - ProjectCreator exposed in api allowing users to redefine hooks
+  - Configuration object allowed to take creator_class param to constructor
+  - README updated with information about ProjectCreator available hooks
+
 * ver 1.2.1-beta
   - ".svn" directory matcher added
   - ".git" & ".svn" directories ignored as template name in completion mode
