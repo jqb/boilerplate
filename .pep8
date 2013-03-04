@@ -1,0 +1,7 @@
+[pep8]
+
+max-line-length = 110
+
+# E251 no spaces around keyword / parameter equals
+# E303 too many blank lines (3)
+ignore = E251,E303

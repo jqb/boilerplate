@@ -58,7 +58,7 @@ def templates_places(paths_environ_name='BOILERPLATE_TEMPLATES',
         userhome_path(user_templates_dir_name)
     ).split(paths_sep)
     paths.insert(0, default_templates_dir)
-    return filter(lambda x:x, paths)
+    return filter(lambda x: x, paths)
 
 
 class Configuration(object):
