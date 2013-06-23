@@ -27,7 +27,7 @@ class CommandLineHandlerTest(unittest.TestCase):
 
     def test_it_should_have_at_least_one_default_template(self):
         res = self.handler.get_templates_list()
-        assert len(res) > 1, "There should be at least one template by default."
+        assert len(res) >= 1, "There should be at least one template by default."
 
 
 
