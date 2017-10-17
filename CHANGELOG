@@ -1,3 +1,7 @@
+* ver 1.2.3
+  - python 2.x / 3.5 compatibility
+  - tox added
+
 * ver 1.2.2-beta
   - ProjectCreator exposed in api allowing users to redefine hooks
   - Configuration object allowed to take creator_class param to constructor

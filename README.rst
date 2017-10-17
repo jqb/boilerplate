@@ -1,7 +1,7 @@
 boilerplate
 -----------
 
-ver. 1.2.2 beta
+ver. 1.2.3
 
 
 Very simple templating engine for directories & files structures.
