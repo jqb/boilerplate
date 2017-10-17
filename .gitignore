@@ -1,3 +1,6 @@
 *.pyc
 *~
+*.tox/**
+.cache/**
 dev.db
+boilerplate.egg-info/**
