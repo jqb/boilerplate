@@ -53,10 +53,13 @@ def templates_places(paths_environ_name='BOILERPLATE_TEMPLATES',
         my_fancy_template
 
     """
-    paths = os.environ.get(
-        paths_environ_name,
-        userhome_path(user_templates_dir_name)
-    ).split(paths_sep)
+    user_home_path = userhome_path(user_templates_dir_name)
+    paths = os.environ.get(paths_environ_name)
+    if not paths and user_home_path:
+        paths = user_home_path
+    if paths:
+        paths = paths.split(paths_sep)
+    paths = paths or []
     paths.insert(0, default_templates_dir)
     return filter(lambda x: x, paths)
 

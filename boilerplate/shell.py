@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 import os
 import errno
-import shutil
 import os.path as ospath
 
 
 def mkdir_p(*path):
     try:
         os.makedirs(ospath.join(*path))
-    except OSError, exc:  # Python >2.5
+    except OSError as exc:  # Python >2.5
         if exc.errno == errno.EEXIST:
             pass
         else:

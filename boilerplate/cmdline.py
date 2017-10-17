@@ -1,11 +1,17 @@
 # -*- coding: utf-8 -*-
-import re
+from __future__ import unicode_literals
+
 import sys
 import optparse
 import os
 import os.path as ospath
 
-from . import shell, importlib, template, conf, filematchers, VERSION
+from . import (
+    template,
+    conf,
+    filematchers,
+    VERSION,
+)
 
 
 def handle(argv):

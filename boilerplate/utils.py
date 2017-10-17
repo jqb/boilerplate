@@ -9,10 +9,16 @@ def create_module_path(thefile, *path):
 
 
 def _posix_home(*path):
+    if 'HOME' not in os.environ:
+        return
     return join(os.environ["HOME"], *path)
 
 
 def _nt_home(*path):
+    if 'HOMEDRIVE' not in os.environ:
+        return None
+    if 'HOMEPATH' not in os.environ:
+        return None
     return join(
         os.environ["HOMEDRIVE"],
         os.environ["HOMEPATH"],

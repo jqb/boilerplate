@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
-from cStringIO import StringIO
+try:
+    from StringIO import StringIO
+except ImportError:
+    from io import StringIO
+
 import unittest
 
 from boilerplate import cmdline

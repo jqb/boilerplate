@@ -13,9 +13,9 @@ template directory and create project folder.
 
 Usage:
    >>> from boilerplate.template import process_line
-   >>> print process_line("def _$function_name$_(*args, **kwargs):\n", {
+   >>> print(process_line("def _$function_name$_(*args, **kwargs):\n", {
    >>>     'function_name': 'the_function',
-   >>> })
+   >>> }))
    >>> def the_function(*args, **kwargs):
    >>>
 """
@@ -25,7 +25,6 @@ import sys
 import os.path as ospath
 
 from . import shell, importlib
-from .utils import create_module_path
 
 
 VAR_START = '_$'
@@ -119,7 +118,7 @@ class ProjectCreator(object):
 
     # HOOKS
     def directory_ignored(self, dirname):
-        print "DIRECTORY IGNORED:", dirname
+        print("DIRECTORY IGNORED:", dirname)
 
     def file_ignored(self, dirname):
         pass
@@ -142,7 +141,7 @@ class ProjectCreator(object):
         pass
 
     def after_directory_create(self, destination_dir_path):
-        print "    ", destination_dir_path
+        print("    ", destination_dir_path)
 
     def before_create(self, destination_path):
         pass
