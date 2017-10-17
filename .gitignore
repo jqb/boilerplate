@@ -4,3 +4,5 @@
 .cache/**
 dev.db
 boilerplate.egg-info/**
+dist/**
+build/**

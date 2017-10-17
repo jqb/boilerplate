@@ -35,3 +35,6 @@ setup(
     scripts=['bin/boil'],
     zip_safe=False,
 )
+
+
+# python setup.py build sdist bdist_wheel upload
