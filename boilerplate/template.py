@@ -129,7 +129,7 @@ class ProjectCreator(object):
     def create_file(self, source_path, dest_path, context):
         dest = open(dest_path, "w")
         source = open(source_path, "r")
-        for line in source.xreadlines():
+        for line in source.readlines():
             dest.write(self.apply_context(line, context))
         dest.close()
         source.close()
